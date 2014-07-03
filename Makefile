@@ -26,8 +26,8 @@ package:
 	    echo "Fixing _oasis..." && \
 	    sed -ie 's/core_kernel/core_kernel_js/' _oasis && \
 	    echo "Forcing x86 architecture..." && \
-	    sed -ie 's/ ARCH_SIXTYFOUR/ NO_ARCH_SIXTYFOUR/' lib/*.c lib/*.ml lib/*.mli && \
-	    sed -ie '/assert (Int.num_bits = 31)/d' lib/pool.ml; \
+	    LANG=C sed -ie 's/ ARCH_SIXTYFOUR/ NO_ARCH_SIXTYFOUR/' lib/*.c lib/*.ml lib/*.mli && \
+	    LANG=C sed -ie '/assert (Int.num_bits = 31)/d' lib/pool.ml; \
 	fi
 
 .PHONY: build
