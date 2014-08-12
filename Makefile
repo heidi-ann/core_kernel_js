@@ -24,7 +24,10 @@ package:
 	    echo "Checkouting $(CORE_KERNEL_VERSION)..." && \
 	    git checkout -b work "$(CORE_KERNEL_VERSION)^" && \
 	    echo "Fixing _oasis..." && \
-	    sed -ie 's/core_kernel/core_kernel_js/' _oasis && \
+	    sed -e 's/core_kernel/core_kernel_js/' _oasis \
+	        | awk '/^(Library check_caml_modify|Executable|Test)/, /^$$/ { next } { print }' \
+	        > tmp && \
+	    mv tmp _oasis && \
 	    echo "Forcing x86 architecture..." && \
 	    LANG=C sed -ie 's/ ARCH_SIXTYFOUR/ NO_ARCH_SIXTYFOUR/' lib/*.c lib/*.ml lib/*.mli && \
 	    LANG=C sed -ie '/assert (Int.num_bits = 31)/d' lib/pool.ml; \
