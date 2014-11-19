@@ -55,7 +55,7 @@ function caml_hash_mix_string_str(h, s) {
 //Provides: caml_hash_string
 //Requires: caml_hash_mix_string_str, FINAL_MIX
 function caml_hash_string(s) {
-  var h = caml_hash_mix_string_str(0, s.getFullBytes());
+  var h = caml_hash_mix_string_str(0, caml_bytes_of_string(s));
   h = FINAL_MIX(h)
   return h & 0x3FFFFFFF;
 }
