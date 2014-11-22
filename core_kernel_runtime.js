@@ -1,6 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 // Start: copy from js_of_ocaml
 
+//Provides: caml_mul const
+if (!Math.imul)
+  Math.imul =
+    function (x,y) { return ((((x >> 16) * y) << 16) + (x & 0xffff) * y)|0; };
+var caml_mul = Math.imul;
+
 //Provides: ROTL32
 function ROTL32(x,n) { return ((x << n) | (x >>> (32-n))); }
 
@@ -55,7 +61,7 @@ function caml_hash_mix_string_str(h, s) {
 //Provides: caml_hash_string
 //Requires: caml_hash_mix_string_str, FINAL_MIX
 function caml_hash_string(s) {
-  var h = caml_hash_mix_string_str(0, s.getFullBytes());
+  var h = caml_hash_mix_string_str(0, s);
   h = FINAL_MIX(h)
   return h & 0x3FFFFFFF;
 }
